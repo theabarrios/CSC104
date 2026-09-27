@@ -32,6 +32,9 @@ class Book{
     public double getQuality(){
         return quality;
     }
+    public double getQuantity(){
+        return quantity;
+    }
     
     //setters
     public void setPrice(double price){
@@ -111,9 +114,9 @@ class Book{
     }
 
     public void displayBookInformation(int i){
-        System.out.println("===========================");
-        System.out.printf("\n           BOOK %d          ", i+1);
-        System.out.println("===========================");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.printf("           BOOK %d          \n", i+1);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println("Name: " + getName());
         System.out.println("Author: " + author);
         System.out.println("Genre: " + genre);
@@ -127,10 +130,11 @@ class Book{
 
 public class BookResellSystem{
     public static void main(String[] args){
+        System.out.println("=========================BOOK RESELL SYSTEM=========================");
         Scanner scanner= new Scanner(System.in);
         
         int numOfBooks;
-        System.out.printf("\nEnter number of books: ");
+        System.out.printf("Enter number of books: ");
         numOfBooks=scanner.nextInt();
 
         while(numOfBooks<5){
@@ -173,39 +177,39 @@ public class BookResellSystem{
             scanner.nextLine();
             books[i].modifyBasePrice(basePrice);
 
-            System.out.printf("Enter Quality: ");
+            System.out.printf("\nEnter Quality: ");
             quality=scanner.nextDouble();
             scanner.nextLine();
             books[i].modifyQuality(quality);
 
-            System.out.printf("Enter Quantity: ");
+            System.out.printf("\nEnter Quantity: ");
             quantity=scanner.nextInt();
             scanner.nextLine();
             books[i].modifyQuantity(quantity);
             
         }
-
+	System.out.printf("\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         System.out.println("Before Quality-based Price Adjustment: ");
         for(int i=0; i<numOfBooks;i++){
-            System.out.printf("\n=====Book %d=====", i+1);
+            System.out.printf("\n=====Book %d=====\n", i+1);
             System.out.println("Name: " + books[i].getName());
             System.out.println("Price: " + books[i].getPrice());
         }
-
+	System.out.printf("\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         System.out.println("After Quality-based Price Adjustment: ");
         for(int i=0; i<numOfBooks;i++){
             books[i].calculateResellPrice();
-            System.out.printf("\n=====Book %d=====", i+1);
+            System.out.printf("\n=====Book %d=====\n", i+1);
             System.out.println("Name: " + books[i].getName());
             System.out.println("Price: " + books[i].getPrice());
         }
 
-        System.out.println("==============BOOK INFORMATION==============");
+        System.out.printf("\n\n==============BOOK INFORMATION==============\n");
         for(int i=0;i<numOfBooks;i++){
             books[i].displayBookInformation(i);
         }
 
-        System.out.println("==============FINAL SUMMARY==============");
+        System.out.printf("\n\n==============FINAL SUMMARY==============\n");
         Book highest=books[0];
         Book lowest=books[0];
         double highestQuality=books[0].getQuality();
@@ -225,8 +229,8 @@ public class BookResellSystem{
                 lowest=books[i];
             }
             if(books[i].getQuality()>=50){
-                booksToSell++;
-                totalPrice+=books[i].getPrice();
+                booksToSell+=books[i].getQuantity();
+                totalPrice+=(books[i].getPrice())*books[i].getQuantity();
             }
         }
         if(booksToSell>0){
@@ -239,6 +243,6 @@ public class BookResellSystem{
         System.out.println("Book with Highest Quality: " + highest.getName());
         System.out.println("Book with Lowest Quality: " + lowest.getName());
         System.out.println("Total Number of Books that can be sold: " + booksToSell);
-        System.out.println("Average Price of books that can be sold: " + averagePrice);
+        System.out.printf("Average Price of books that can be sold: %.2f ", averagePrice);
     }
 }
